@@ -1,0 +1,50 @@
+
+/**********************************************
+HTML
+**********************************************/
+  * {
+    box-sizing: content-box;
+  }
+
+  html {
+    font-family: 'Roboto', 'Lato', 'Open Sans', 'Helvetica Neue', 'calibri', sans-serif;
+
+  }
+
+  #sudoku-grid {
+    width: 620px;
+    margin: auto;
+    margin-top: 50px;
+    border: 4px solid #607d8b; /*blue-grey*/
+  }
+  #sudoku-grid table tbody tr {
+    border-bottom: 1px solid #90a4ae; /*blue-grey lighten-2*/
+  }
+  #sudoku-grid table tbody tr td {
+    width: 60px;
+    height: 60px;
+    border-left: 1px solid #90a4ae; /*blue-grey lighten-2*/
+    text-align: center;
+    font-size: 40px;
+    padding: 0px;
+    color: #37474f;
+  }
+  #sudoku-grid table tbody tr:last-child {
+    border-top: none;
+  }
+  #sudoku-grid table tbody tr td:first-child {
+    border-left: none;
+  }
+  #sudoku-grid table tbody tr td:nth-child(3), #sudoku-grid table tbody tr td:nth-child(6) {
+    border-right: 4px solid #607d8b; /*blue-grey*/
+  }
+  #sudoku-grid table tbody tr:nth-child(3), #sudoku-grid table tbody tr:nth-child(6) {
+    border-bottom: 4px solid #607d8b; /*blue-grey*/
+  }
+
+
+  /* HOVER EFFECTS */
+  #sudoku-grid table tbody tr td:hover {
+    background-color: #eceff1;
+    cursor: pointer;
+  }
