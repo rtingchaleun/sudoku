@@ -1,13 +1,87 @@
-
-
+const validInput = [ 1, 2, 3, 4, 5, 6, 7, 8, 9];
+let oldValue;
+let newValue;
+let id;
+let thisSquare;
+let thisRow;
+let thisColumn;
+let rowValues = [ ];
+let columnValues = [ ];
 
 init();
 
 
 function init() {
-  checkRows();
-  checkColumns();
+  //checkRows();
+  //checkColumns();
+
+  let tdList = document.getElementsByTagName("td")
+  for(let i = 0; i < tdList.length; i++) {
+    if (tdList[i].innerText == ""){
+      console.log(tdList[i].id + " contains no text");
+      tdList[i].setAttribute("contenteditable", "true");
+      tdList[i].className = "editable";
+      tdList[i].addEventListener("click", tdClick);
+      tdList[i].addEventListener("focusout", tdFocusOut);
+    } else {
+      tdList[i].setAttribute("contenteditable", "false");
+      tdList[i].className = "read-only";
+    }
+  }
+  console.log("initialized");
 }
+function tdClick(){
+  id = this.id;
+  console.log("clicked square: " + this.id);
+
+  let array = id.split("");
+  console.log(array);
+
+  thisRow = array[0];
+  thisColumn = array[2];
+  console.log("row: " + thisRow);
+  console.log("column: " + thisColumn);
+
+  // save existing row values
+  for (let i = 1; i <= 9; i++){
+    let x = document.getElementById(thisRow + "-" + i);
+    rowValues[i-1] = x.innerText;
+    let y = document.getElementById(i + "-" + thisColumn);
+    columnValues[i-1] = y.innerText;
+  }
+  console.log(rowValues);
+  console.log(columnValues);
+
+  oldValue = this.innerText;                      // save existing value
+  console.log("old value: " + oldValue);
+
+  this.innerText = "";                            // clear value
+}
+function tdFocusOut(){
+  console.log("focus out " + this.id);
+
+  newValue = this.innerText;                      // save new value
+  console.log("new value: " + newValue);
+
+  // check if all values in that row are unique
+  for (let i = 0; i < 9; i++){
+    if (newValue == rowValues[i] && newValue != ""){
+      console.log("found duplicate value in the row");
+      this.classList.add("red", "lighten-4");
+      console.log(this);
+    }
+  }
+
+
+  // check if all values in that column are unique
+  for (let i = 0; i < 9; i++){
+    if (newValue == columnValues[i] && newValue != ""){
+      console.log("found duplicate value in the column");
+    }
+  }
+
+}
+
 function checkValid(sum) {
   if (sum == 45) {
     console.log("valid");
@@ -17,6 +91,7 @@ function checkValid(sum) {
     return false;
   }
 }
+
 function checkRows() {
   checkRow1();
   checkRow2();
@@ -31,6 +106,7 @@ function checkRows() {
 function checkRow1() {
   let sum = 0;
   for ( let i = 1; i <= 9; i++ ) {
+
     let element = document.getElementById("1-" + i);
     let value = element.innerText;
     sum = sum + parseInt(value);

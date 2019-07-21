@@ -26,8 +26,11 @@ HTML
     border-left: 1px solid #90a4ae; /*blue-grey lighten-2*/
     text-align: center;
     font-size: 40px;
+    font-weight: bold;
     padding: 0px;
-    color: #37474f;
+  }
+  #sudoku-grid table tbody tr td input {
+
   }
   #sudoku-grid table tbody tr:last-child {
     border-top: none;
@@ -36,15 +39,25 @@ HTML
     border-left: none;
   }
   #sudoku-grid table tbody tr td:nth-child(3), #sudoku-grid table tbody tr td:nth-child(6) {
-    border-right: 4px solid #607d8b; /*blue-grey*/
+    border-right: 4px solid #607d8b; /* blue-grey */
   }
   #sudoku-grid table tbody tr:nth-child(3), #sudoku-grid table tbody tr:nth-child(6) {
-    border-bottom: 4px solid #607d8b; /*blue-grey*/
+    border-bottom: 4px solid #607d8b; /* blue-grey */
   }
 
 
   /* HOVER EFFECTS */
   #sudoku-grid table tbody tr td:hover {
-    background-color: #eceff1;
+    background-color: #eceff1; /* blue-grey lighten-5 */
     cursor: pointer;
+  }
+  #sudoku-grid table tbody tr td.editable {
+    color: #2e7d32; /* green darken-3 */
+  }
+  #sudoku-grid table tbody tr td.read-only {
+    color: #37474f; /* blue-grey darken-3 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
