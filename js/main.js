@@ -14,7 +14,7 @@ const solution = [
 ];
 
 
-let inputList = document.getElementsByTagName("input")
+const inputList = document.getElementsByTagName("input");
 let oldValue;
 let newValue;
 
@@ -32,16 +32,19 @@ let sectionValues = [ ];
 let completeSquares;
 let incompleteSquares;
 
+let isSolved = false;
+
+let clock = document.getElementById("timer");
+let seconds = 0;
+let minutes = 0;
+let t;
 
 init();
 
 
 function init() {
-  //checkRows();
-  //checkColumns();
+  isSolved = false;
 
-  //console.log(solution);
-  //console.log(inputList);
   for(let i = 0; i < inputList.length; i++) {
     inputList[i].setAttribute("maxlength", "1");
     inputList[i].addEventListener("click", inputClick);
@@ -60,207 +63,215 @@ function init() {
   btn.addEventListener("click", showSolution);
 
   updateCounter();
+
+  clock.textContent = "00:00";
+  minutes = 0;
+  seconds = 0;
+  timer();
+
   console.log("initialized");
 }
 function inputClick(){
-  // clear light blue highlighting
-  for (let i = 0; i < inputList.length; i++){
-    element = inputList[i];
-    element.classList.remove("light-blue", "lighten-3")
-  }
+  if (isSolved == false) {
+    // clear light blue highlighting
+    for (let i = 0; i < inputList.length; i++){
+      element = inputList[i];
+      element.classList.remove("light-blue", "lighten-3")
+    }
 
-  console.log(" ");
-  thisId = this.id;
-  thisClass = this.className;
-  console.log("clicked square: #" + thisId + " ." + thisClass);
+    console.log(" ");
+    thisId = this.id;
+    thisClass = this.className;
+    console.log("clicked square: #" + thisId + " ." + thisClass);
 
-  thisSquare = this;
-  console.log("this square: " + thisSquare);
+    thisSquare = this;
+    console.log("this square: " + thisSquare);
 
-  let array = thisId.split("");
-  thisRow = array[0];
-  thisColumn = array[2];
-  console.log("row: " + thisRow);
-  console.log("column: " + thisColumn);
+    let array = thisId.split("");
+    thisRow = array[0];
+    thisColumn = array[2];
+    console.log("row: " + thisRow);
+    console.log("column: " + thisColumn);
 
-  // save existing section values
-  if (thisSquare.classList.contains("s1")) {
-    thisSection = "s1";
-    let count = 0;
-    for (let i = 1; i <= 3; i++) {
-      for (let j = 1; j <= 3; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
+    // save existing section values
+    if (thisSquare.classList.contains("s1")) {
+      thisSection = "s1";
+      let count = 0;
+      for (let i = 1; i <= 3; i++) {
+        for (let j = 1; j <= 3; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+      console.log(sectionValues);
+    } else if (thisSquare.classList.contains("s2")) {
+      thisSection = "s2";
+      let count = 0;
+      for (let i = 1; i <= 3; i++) {
+        for (let j = 4; j <= 6; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+      console.log(sectionValues);
+    } else if (thisSquare.classList.contains("s3")) {
+      thisSection = "s3";
+      let count = 0;
+      for (let i = 1; i <= 3; i++) {
+        for (let j = 7; j <= 9; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s4")) {
+      thisSection = "s4";
+      let count = 0;
+      for (let i = 4; i <= 6; i++) {
+        for (let j = 1; j <= 3; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s5")) {
+      thisSection = "s5";
+      let count = 0;
+      for (let i = 4; i <= 6; i++) {
+        for (let j = 4; j <= 6; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s6")) {
+      thisSection = "s6";
+      let count = 0;
+      for (let i = 4; i <= 6; i++) {
+        for (let j = 7; j <= 9; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s7")) {
+      thisSection = "s7";
+      let count = 0;
+      for (let i = 7; i <= 9; i++) {
+        for (let j = 1; j <= 3; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s8")) {
+      thisSection = "s8";
+      let count = 0;
+      for (let i = 7; i <= 9; i++) {
+        for (let j = 4; j <= 6; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
+      }
+    }  else if (thisSquare.classList.contains("s9")) {
+      thisSection = "s9";
+      let count = 0;
+      for (let i = 7; i <= 9; i++) {
+        for (let j = 7; j <= 9; j++) {
+          let element = document.getElementById(i + "-" + j)
+          sectionValues[count] = element.value;
+          count++;
+        }
       }
     }
     console.log(sectionValues);
-  } else if (thisSquare.classList.contains("s2")) {
-    thisSection = "s2";
-    let count = 0;
-    for (let i = 1; i <= 3; i++) {
-      for (let j = 4; j <= 6; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-    console.log(sectionValues);
-  } else if (thisSquare.classList.contains("s3")) {
-    thisSection = "s3";
-    let count = 0;
-    for (let i = 1; i <= 3; i++) {
-      for (let j = 7; j <= 9; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s4")) {
-    thisSection = "s4";
-    let count = 0;
-    for (let i = 4; i <= 6; i++) {
-      for (let j = 1; j <= 3; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s5")) {
-    thisSection = "s5";
-    let count = 0;
-    for (let i = 4; i <= 6; i++) {
-      for (let j = 4; j <= 6; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s6")) {
-    thisSection = "s6";
-    let count = 0;
-    for (let i = 4; i <= 6; i++) {
-      for (let j = 7; j <= 9; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s7")) {
-    thisSection = "s7";
-    let count = 0;
-    for (let i = 7; i <= 9; i++) {
-      for (let j = 1; j <= 3; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s8")) {
-    thisSection = "s8";
-    let count = 0;
-    for (let i = 7; i <= 9; i++) {
-      for (let j = 4; j <= 6; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }  else if (thisSquare.classList.contains("s9")) {
-    thisSection = "s9";
-    let count = 0;
-    for (let i = 7; i <= 9; i++) {
-      for (let j = 7; j <= 9; j++) {
-        let element = document.getElementById(i + "-" + j)
-        sectionValues[count] = element.value;
-        count++;
-      }
-    }
-  }
-  console.log(sectionValues);
 
-  // save existing row values
-  for (let i = 1; i <= 9; i++){
-    let x = document.getElementById(thisRow + "-" + i);
-    rowValues[i-1] = x.value;
-  }
-  console.log(rowValues);
+    // save existing row values
+    for (let i = 1; i <= 9; i++){
+      let x = document.getElementById(thisRow + "-" + i);
+      rowValues[i-1] = x.value;
+    }
+    console.log(rowValues);
 
-  // save existing column values
-  for (let i = 1; i <= 9; i++){
-    let y = document.getElementById(i + "-" + thisColumn);
-    columnValues[i-1] = y.value;
-  }
-  console.log(columnValues);
+    // save existing column values
+    for (let i = 1; i <= 9; i++){
+      let y = document.getElementById(i + "-" + thisColumn);
+      columnValues[i-1] = y.value;
+    }
+    console.log(columnValues);
 
-  if (thisSquare.classList.contains("editable")){
-    this.select();                              // auto select existing text
-    oldValue = this.value;                      // save existing value
-    console.log("old value: " + oldValue);
-  }
+    if (thisSquare.classList.contains("editable")){
+      this.select();                              // auto select existing text
+      oldValue = this.value;                      // save existing value
+      console.log("old value: " + oldValue);
+    }
 
-  // highlight all matching numbers
-  if (this.value >= 1 && this.value <= 9){
-    let selectedNum = this.value;
-    console.log("highlighting all " + selectedNum + "s");
-    for (let i = 1; i <=9; i++){
-      for (let j = 1; j <=9; j++){
-        let element = document.getElementById(i + "-" + j);
-        let num = element.value;
-        if (selectedNum == num){
-          element.classList.add("light-blue", "lighten-3");
+    // highlight all matching numbers
+    if (this.value >= 1 && this.value <= 9){
+      let selectedNum = this.value;
+      console.log("highlighting all " + selectedNum + "s");
+      for (let i = 1; i <=9; i++){
+        for (let j = 1; j <=9; j++){
+          let element = document.getElementById(i + "-" + j);
+          let num = element.value;
+          if (selectedNum == num){
+            element.classList.add("light-blue", "lighten-3");
+          }
         }
       }
     }
   }
-
 }
 
 
 function inputFocusOut(){
-  console.log(" ");
-  console.log("focus out " + this.id);
-  console.log(rowValues);
+  if (isSolved == false) {
+    console.log(" ");
+    console.log("focus out " + this.id);
+    console.log(rowValues);
 
-  //remove highlighting
-  thisSquare.classList.remove("red", "lighten-4");
-  thisSquare.classList.remove("light-blue", "lighten-3");
+    newValue = this.value;                      // save new value
+    console.log("old value: " + oldValue);
+    console.log("new value: " + newValue);
 
-  newValue = this.value;                      // save new value
-  console.log("old value: " + oldValue);
-  console.log("new value: " + newValue);
+    // validate new value
+    if (thisSquare.classList.contains("editable") && newValue != oldValue){
+      //remove highlighting
+      thisSquare.classList.remove("red", "lighten-4");
+      thisSquare.classList.remove("light-blue", "lighten-3");
 
+      // check if all values in that row are unique
+      for (let i = 0; i < 9; i++){
+        console.log("does " + newValue + " match " + rowValues[i] + "?");
 
-  // validate new value
-  if (thisSquare.classList.contains("editable") && newValue != oldValue){
-    // check if all values in that row are unique
-    for (let i = 0; i < 9; i++){
-      console.log("does " + newValue + " match " + rowValues[i] + "?");
-
-      if (newValue == rowValues[i] && newValue != ""){
-        console.log("found duplicate value in the row");
-        this.classList.add("red", "lighten-4");
-        break
+        if (newValue == rowValues[i] && newValue != ""){
+          console.log("found duplicate value in the row");
+          this.classList.add("red", "lighten-4");
+          break
+        }
+      }
+      // check if all values in that column are unique
+      for (let i = 0; i < 9; i++){
+        if (newValue == columnValues[i] && newValue != ""){
+          console.log("found duplicate value in the column");
+          this.classList.add("red", "lighten-4");
+          break
+        }
+      }
+      // check if all values in that section are unique
+      for (let i = 0; i < 9; i++){
+        if (newValue == sectionValues[i] && newValue != ""){
+          console.log("found duplicate value in the section");
+          this.classList.add("red", "lighten-4");
+          break
+        }
       }
     }
-    // check if all values in that column are unique
-    for (let i = 0; i < 9; i++){
-      if (newValue == columnValues[i] && newValue != ""){
-        console.log("found duplicate value in the column");
-        this.classList.add("red", "lighten-4");
-        break
-      }
-    }
-    // check if all values in that section are unique
-    for (let i = 0; i < 9; i++){
-      if (newValue == sectionValues[i] && newValue != ""){
-        console.log("found duplicate value in the section");
-        this.classList.add("red", "lighten-4");
-        break
-      }
-    }
+    updateCounter();
   }
-  updateCounter();
 }
 
 function updateCounter(){
@@ -277,50 +288,118 @@ function updateCounter(){
   for (let i = 1; i <= 9; i++) {
     for (let j = 1; j <= 9; j++) {
       let element = document.getElementById(i + "-" + j);
-      console.log(element.value);
+      let display;
+      let parent;
+
       if (element.value == 1){
         counter1--;
+        display = document.getElementById("counter-1");
+        display.innerText = counter1;
+        parent = display.parentElement;
+        if (counter1 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 2){
         counter2--;
+        display = document.getElementById("counter-2");
+        display.innerText = counter2;
+        parent = display.parentElement;
+        if (counter2 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 3){
         counter3--;
+        display = document.getElementById("counter-3");
+        display.innerText = counter3;
+        parent = display.parentElement;
+        if (counter3 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 4){
         counter4--
+        display = document.getElementById("counter-4");
+        display.innerText = counter4;
+        parent = display.parentElement;
+        if (counter4 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 5){
         counter5--;
+        display = document.getElementById("counter-5");
+        display.innerText = counter5;
+        parent = display.parentElement;
+        if (counter5 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 6){
         counter6--;
+        display = document.getElementById("counter-6");
+        display.innerText = counter6;
+        parent = display.parentElement;
+        if (counter6 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 7){
         counter7--;
+        display = document.getElementById("counter-7");
+        display.innerText = counter7;
+        parent = display.parentElement;
+        if (counter7 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 8){
         counter8--;
+        display = document.getElementById("counter-8");
+        display.innerText = counter8;
+        parent = display.parentElement;
+        if (counter8 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       } else if (element.value == 9){
         counter9--;
+        display = document.getElementById("counter-9");
+        display.innerText = counter9;
+        parent = display.parentElement;
+        if (counter9 <= 0){
+          parent.style.visibility = "hidden";
+        } else {
+          parent.style.visibility = "inherit";
+        }
       }
     }
   }
 
-  //display counter
-  let display = document.getElementById("counter-1");
-  display.innerText = counter1;
-  display = document.getElementById("counter-2");
-  display.innerText = counter2;
-  display = document.getElementById("counter-3");
-  display.innerText = counter3;
-  display = document.getElementById("counter-4");
-  display.innerText = counter4;
-  display = document.getElementById("counter-5");
-  display.innerText = counter5;
-  display = document.getElementById("counter-6");
-  display.innerText = counter6;
-  display = document.getElementById("counter-7");
-  display.innerText = counter7;
-  display = document.getElementById("counter-8");
-  display.innerText = counter8;
-  display = document.getElementById("counter-9");
-  display.innerText = counter9;
-
-  console.log("counter updated");
+  // check if the puzzle is solved and finished
+  let errors = 0;
+  let k = 0;
+  for (let i = 1; i <= 9; i++) {
+    for (let j = 1; j <= 9; j++) {
+      let element = document.getElementById(i + "-" + j);
+      if (element.value != solution[k]){
+        errors++;
+      }
+      k++;
+    }
+  }
+  if (errors == 0){
+    stopPuzzle();
+  }
 }
 
 function showSolution(){
@@ -364,216 +443,40 @@ function showSolution(){
     console.log("showing solution");
 }
 
-function checkValid(sum) {
-  if (sum == 45) {
-    console.log("valid");
-    return true;
-  } else {
-    console.log("invalid");
-    return false;
+function stopPuzzle(){
+  isSolved = true;
+  M.toast({
+    html: "You finished in " + clock.textContent + "!",
+    displayLength: 30000,
+  })
+
+  // hide solve button
+  let btn = document.getElementById("btn-solve");
+  btn.style.visibility = "hidden";
+
+  //stop timer
+  clearTimeout(t);
+
+  for (let i = 1; i <= 9; i++) {
+    for (let j = 1; j <= 9; j++) {
+      let element = document.getElementById(i + "-" + j);
+      element.setAttribute("disabled", "true");
+    }
   }
+  console.log("puzzle stopped");
 }
 
-function checkRows() {
-  checkRow1();
-  checkRow2();
-  checkRow3();
-  checkRow4();
-  checkRow5();
-  checkRow6();
-  checkRow7();
-  checkRow8();
-  checkRow9();
-}
-function checkRow1() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
 
-    let element = document.getElementById("1-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row1: " + sum);
-  let valid = checkValid(sum);
+
+function timer() {
+  t = setTimeout(add, 1000);
 }
-function checkRow2() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("2-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
+function add() {
+  seconds++;
+  if (seconds >= 60) {
+    seconds = 0;
+    minutes++;
   }
-  console.log("sum of row2: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow3() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("3-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row3: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow4() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("4-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row4: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow5() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("5-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row5: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow6() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("6-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row6: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow7() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("7-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row7: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow8() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("8-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row8: " + sum);
-  let valid = checkValid(sum);
-}
-function checkRow9() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById("9-" + i);
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of row9: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumns() {
-  checkColumn1();
-  checkColumn2();
-  checkColumn3();
-  checkColumn4();
-  checkColumn5();
-  checkColumn6();
-  checkColumn7();
-  checkColumn8();
-  checkColumn9();
-}
-function checkColumn1() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-1");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column1: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn2() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-2");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column2: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn3() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-3");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column3: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn4() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-4");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column4: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn5() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-5");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column5: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn6() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-6");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column6: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn7() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-7");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column7: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn8() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-8");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column8: " + sum);
-  let valid = checkValid(sum);
-}
-function checkColumn9() {
-  let sum = 0;
-  for ( let i = 1; i <= 9; i++ ) {
-    let element = document.getElementById(i + "-9");
-    let value = element.value;
-    sum = sum + parseInt(value);
-  }
-  console.log("sum of column9: " + sum);
-  let valid = checkValid(sum);
+  clock.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+  timer();
 }

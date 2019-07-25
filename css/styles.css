@@ -9,11 +9,25 @@ HTML
   html {
     font-family: 'Helvetica Neue', 'calibri', sans-serif;
   }
+  #viewport {
 
-  #sudoku-grid {
+  }
+  #header-options {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+  }
+  #dashboard {
     width: 556px;
     margin: auto;
     margin-top: 30px;
+  }
+  #timer {
+
+  }
+  #sudoku-grid {
+    width: 556px;
+    margin: auto;
     border: 4px solid #607d8b; /*blue-grey*/
   }
   #sudoku-grid .row {
