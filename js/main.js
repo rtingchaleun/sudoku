@@ -13,7 +13,6 @@ const solution = [
   6, 4, 1,    2, 5, 9,    8, 3, 7
 ];
 
-
 const inputList = document.getElementsByTagName("input");
 let oldValue;
 let newValue;
@@ -62,6 +61,9 @@ function init() {
   let btn = document.getElementById("btn-solve");
   btn.addEventListener("click", showSolution);
 
+  btn = document.getElementById("btn-pencil-marks");
+  btn.addEventListener("click", showPencilMarks);
+
   updateCounter();
 
   clock.textContent = "00:00";
@@ -104,7 +106,6 @@ function inputClick(){
           count++;
         }
       }
-      console.log(sectionValues);
     } else if (thisSquare.classList.contains("s2")) {
       thisSection = "s2";
       let count = 0;
@@ -115,7 +116,6 @@ function inputClick(){
           count++;
         }
       }
-      console.log(sectionValues);
     } else if (thisSquare.classList.contains("s3")) {
       thisSection = "s3";
       let count = 0;
@@ -187,6 +187,7 @@ function inputClick(){
         }
       }
     }
+    console.log("section array");
     console.log(sectionValues);
 
     // save existing row values
@@ -194,6 +195,7 @@ function inputClick(){
       let x = document.getElementById(thisRow + "-" + i);
       rowValues[i-1] = x.value;
     }
+    console.log("row array");
     console.log(rowValues);
 
     // save existing column values
@@ -201,6 +203,7 @@ function inputClick(){
       let y = document.getElementById(i + "-" + thisColumn);
       columnValues[i-1] = y.value;
     }
+    console.log("column array");
     console.log(columnValues);
 
     if (thisSquare.classList.contains("editable")){
@@ -479,4 +482,59 @@ function add() {
   }
   clock.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
   timer();
+}
+
+
+function showPencilMarks(){
+  let pencilMarks = document.getElementsByClassName("pencil-mark-cell");
+  console.log(pencilMarks);
+
+  pencilMarks[0].classList.add("show");
+  pencilMarks[8].classList.add("show");
+
+  pencilMarks[24].classList.add("show");
+  pencilMarks[25].classList.add("show");
+/*
+  for(let i = 1; i <= 9; i++) {
+    for(let j = 1; j <= 9; j++) {
+      let square = getElementById(i + "-" + j);
+      if (square.value == ""){
+
+        // save existing row values
+        for (let k = 1; k <= 9; k++){
+          let x = document.getElementById(thisRow + "-" + i);
+          rowValues[i-1] = x.value;
+        }
+
+        // save existing column values
+        for (let i = 1; i <= 9; i++){
+          let y = document.getElementById(i + "-" + thisColumn);
+          columnValues[i-1] = y.value;
+        }
+      }
+    }
+
+
+  }
+
+
+  let neighbours = rowValues.concat(columnValues, sectionValues);
+  console.log(neighbours);
+
+  let pencilMarks = [ ];
+  let num;
+  let match;
+  for (let i = 1; i <= 9; i++){
+    num = i.toString();
+    match = neighbours.indexOf(num);
+
+    if (match == -1){
+      pencilMarks.push(i);
+      console.log(pencilMarks);
+    } else {
+      console.log("found match: " + num);
+    }
+  }
+  */
+  //show candidates for 1-1
 }

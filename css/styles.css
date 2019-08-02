@@ -34,27 +34,28 @@ HTML
     margin: 0px;
     border-bottom: 1px solid #90a4ae; /*blue-grey lighten-2*/
   }
-  #sudoku-grid .row div {
+  #sudoku-grid .row .cell {
     width: 60px;
     height: 60px;
     float: left;
     border-left: 1px solid #90a4ae; /*blue-grey lighten-2*/
     padding: 0px;
+    position: relative;
   }
   #sudoku-grid .row:last-child {
     border-top: none;
   }
-  #sudoku-grid .row div:first-child {
+  #sudoku-grid .row .cell:first-child {
     border-left: none;
   }
-  #sudoku-grid .row div:nth-child(3), #sudoku-grid .row div:nth-child(6) {
+  #sudoku-grid .row .cell:nth-child(3), #sudoku-grid .row .cell:nth-child(6) {
     border-right: 4px solid #607d8b; /* blue-grey */
   }
   #sudoku-grid .row:nth-child(3), #sudoku-grid .row:nth-child(6) {
     border-bottom: 4px solid #607d8b; /* blue-grey */
   }
 
-  #sudoku-grid .row div input {
+  #sudoku-grid .row .cell input {
     height: 100%;
     border: none;
     margin: 0px;
@@ -62,6 +63,73 @@ HTML
     font-weight: bold;
     font-family: 'Helvetica Neue', 'calibri', sans-serif;
     text-align: center;
+    position: absolute;
+    top: 0px;
+    z-index: 100;
+  }
+  .pencil-mark-grid {
+    position: absolute;
+    top: 0px;
+    z-index: 10;
+  }
+  .pencil-mark-cell {
+    width: 20px;
+    text-align: center;
+    float: left;
+  }
+  .pencil-mark-cell-1 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-1.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-2 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-2.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-3 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-3.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-4 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-4.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-5 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-5.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-6 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-6.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-7 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-7.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-8 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-8.show {
+    visibility: inherit;
+  }
+  .pencil-mark-cell-9 {
+    visibility: hidden;
+  }
+  .pencil-mark-cell-9.show {
+    visibility: inherit;
   }
   #footer-counter {
     width: 594px;
@@ -90,14 +158,14 @@ HTML
   }
 
   /* HOVER EFFECTS */
-  #sudoku-grid .row div input:hover {
+  #sudoku-grid .row .cell input:hover {
     background-color: #eceff1; /* blue-grey lighten-5 */
     cursor: pointer;
   }
-  #sudoku-grid .row div input.editable {
+  #sudoku-grid .row .cell input.editable {
     color: #2e7d32; /* green darken-3 */
   }
-  #sudoku-grid .row div input.read-only {
+  #sudoku-grid .row .cell input.read-only {
     color: #37474f; /* blue-grey darken-3 */
     -webkit-user-select: none;
     -moz-user-select: none;
